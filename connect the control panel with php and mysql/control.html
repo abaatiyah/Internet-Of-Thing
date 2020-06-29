@@ -1,0 +1,89 @@
+<html>
+    <head>
+      <title> Control </title> <!--the title of the web page-->
+    </head>
+
+    <body onload="alertting()">
+
+
+<div>
+
+        <p style="text-align:center;">
+    <button id="forw" type="button" >Forwards</button>
+    </p>
+
+
+
+     <p style="text-align:center;">
+        <button id="left" type="button" >Left</button>
+        <button  id="stop" type="button" >STOP</button>
+        <button  id="right" type="button">Right</button>
+    </p>
+
+    <p style="text-align:center;">
+    <button id="back" type="button" >Backwards</button>
+    </p>
+
+</div>
+
+
+
+
+
+    </body>
+<style>
+    button:hover{
+        background-color: green;
+        color: white;
+    }
+    #stop{
+        background-color: red;
+    }
+    div{
+        position: absolute;
+          margin: auto;
+          top: 0;
+          right: 0;
+          bottom: 0;
+          left: 0;
+          width: 200px;
+          height: 120px;
+          background-color: #ccc;
+          border-radius: 3px;
+    }
+
+</style>
+<script>
+    function alertting() {
+        var stop, right, left, forwd, back;
+        document.getElementById("back").addEventListener("click", function () {
+            alert("Go Backward");
+            window.location.href="result.php?result=backward"
+
+        })
+        document.getElementById("forw").addEventListener("click", function () {
+            alert("Go Forward");
+            window.location.href="result.php?result=forward"
+
+        })
+        document.getElementById("left").addEventListener("click", function () {
+            alert("Go Left");
+            window.location.href="result.php?result=left"
+
+        })
+        document.getElementById("right").addEventListener("click", function () {
+            alert("Go Right");
+            window.location.href="result.php?result=right"
+
+        })
+        document.getElementById("stop").addEventListener("click", function () {
+            alert("Stop the robbots");
+            window.location.href="result.php?result=stop"
+
+        })
+
+    }
+
+</script>
+
+</html>
