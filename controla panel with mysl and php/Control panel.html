@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Control panel</title>
+</head>
+<body>
+
+    <div>
+            <div id="cont">
+                <label>
+                    <text style="margin-right: 19px">Right</text>
+                    <input type="text" id="right">
+                </label>
+
+                <br>
+                <label>
+                    <text>Forward</text>
+                    <input type="text" id="forw">
+                </label>
+                <br>
+
+                <label>
+                    <text style="margin-right: 27.5px">Left</text>
+                    <input type="text" id="left">
+                </label>
+                <br><br>
+                <button onclick="delet()">Delete</button><button onclick="save()">Save</button><button onclick="show()">Show</button>
+                <br><br>
+                <table id="table">
+                      <tr>
+                        <th>Position</th>
+                        <th>#Steps</th>
+                      </tr>
+                </table>
+        </div>
+        <div id="aroows">
+
+        </div>
+
+    </div>
+
+    <style>
+        #cont{
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 50%;
+        }
+        #aroows{
+            margin-left: 50%;
+        }
+        table {
+          font-family: arial, sans-serif;
+          border-collapse: collapse;
+          width: 80%;
+        }
+
+        td, th {
+          border: 1px solid #dddddd;
+          text-align: left;
+          padding: 8px;
+        }
+
+        tr:nth-child(even) {
+          background-color: #dddddd;
+        }
+    </style>
+<script>
+    result=[];
+function save() {
+    let div=document.getElementById("aroows");
+    let right=document.getElementById("right").value;
+    let left=document.getElementById("left").value;
+    let fowd=document.getElementById("forw").value;
+    let table=document.getElementById("table");
+    let val,txt;
+    if (right!=""){
+       val=parseInt(right);
+       goRight(val,div,table);
+       txt="show.php?pos=right&add=true&steps="+val;
+       window.location.href=txt;
+    }
+    else if(left!=""){
+        val=parseInt(left)
+        goLeft(val,div,table)
+        txt="show.php?pos=left&add=true&steps="+val;
+        window.location.href=txt;
+
+    }
+    else if(fowd!=""){
+        val=parseInt(fowd);
+        goForward(val,div,table)
+        txt="show.php?pos=forward&add=true&steps="+val;
+        window.location.href=txt;
+    }
+    else{
+        alert("Wrong Entery")
+        return;
+    }
+    document.getElementById("right").value="";
+    document.getElementById("left").value="";
+    document.getElementById("forw").value="";
+
+}
+function goRight(val,div,table) {
+    let i;
+    div.innerHTML+="<br>"
+    for (i=0;i<val;i++){
+        div.innerHTML+="&#8594";
+    }
+    table.innerHTML+="<tr><td>"+"Right"+"</td><td>"+val+"</td></tr>"
+}
+function goLeft(val,div,table) {
+    let i;
+    div.innerHTML+="<br>"
+    for (i=0;i<val;i++){
+        div.innerHTML+="&#8592";
+    }
+    table.innerHTML+="<tr><td>"+"Left"+"</td><td>"+val+"</td></tr>"
+}
+function goForward(val,div,table) {
+    let i;
+    div.innerHTML+="<br>"
+    for (i=0;i<val;i++){
+        if (i<val-2){
+            div.innerHTML+="&#8593 <br>";
+        }
+
+    }
+    table.innerHTML+="<tr><td>"+"Forward"+"</td><td>"+val+"</td></tr>"
+}
+function delet(){
+    let val=deleteRow("table");
+    let arr=document.getElementById("aroows");
+    arr.innerHTML="";
+
+}
+function deleteRow(tableID) {
+
+    try {
+
+        var table = document.getElementById(tableID);
+
+        var rowDelete = table.rows.length - 1;
+        if (rowDelete >= 1) {
+            table.deleteRow(rowDelete);
+            return rowDelete;
+        } else {
+            alert("no content in the table");
+            return 0;
+        }
+    }
+
+    catch(e) {
+
+        alert(e);
+    }
+}
+function ajaxSender(add,pos,steps,id){
+    
+              $.ajax({
+                    type: 'POST',
+                    url: 'show.php',
+                    data: {
+                        add:add,
+                        pos:pos,
+                        steps:steps,
+                        id:id
+                    }
+                });
+}
+function show() {
+    let div=document.getElementById("aroows");
+    let right=document.getElementById("right").value;
+    let left=document.getElementById("left").value;
+    let fowd=document.getElementById("forw").value;
+    let table=document.getElementById("table");
+    let val,txt;
+    if (right!=""){
+       val=parseInt(right);
+       goRight(val,div,table);
+
+    }
+    else if(left!=""){
+        val=parseInt(left)
+        goLeft(val,div,table)
+
+
+    }
+    else if(fowd!=""){
+        val=parseInt(fowd);
+        goForward(val,div,table)
+
+    }
+    else{
+        alert("Wrong Entery")
+        return;
+    }
+    document.getElementById("right").value="";
+    document.getElementById("left").value="";
+    document.getElementById("forw").value="";
+
+}
+</script>
+</body>
+
+
+</html>
